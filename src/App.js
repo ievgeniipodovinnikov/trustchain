@@ -63,7 +63,7 @@ const Layout = () => {
             Follow us on Twitter: <a href="https://x.com/trustchainx" target="_blank" rel="noreferrer">@TrustChainX</a>
           </p>
           <p>
-            Made by <a href="https://x.com/stackleadpro" target="_blank" rel="noreferrer">Stacklead.pro</a>
+            Made by <a href="https://stacklead.pro" target="_blank" rel="noreferrer">Stacklead.pro</a>
           </p>
         </footer>
       </div>
