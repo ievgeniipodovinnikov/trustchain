@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import About from './pages/About';
 import CaseStudy from './pages/CaseStudy';
 import CreateTrustChain from './pages/CreateTrustChain';
-import AnimatedSteps from './AnimatedSteps'; // подключаем шаги
+import AnimatedSteps from './AnimatedSteps';
 
 const Layout = () => {
   const location = useLocation();
