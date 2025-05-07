@@ -1,10 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import About from './pages/About';
 import CaseStudy from './pages/CaseStudy';
 import CreateTrustChain from './pages/CreateTrustChain';
+import AnimatedSteps from './AnimatedSteps'; // подключаем шаги
 
-const App = () => {
+const Layout = () => {
+  const location = useLocation();
+
   const containerStyle = {
     minHeight: '100vh',
     backgroundColor: 'white',
@@ -31,32 +34,37 @@ const App = () => {
     transition: 'color 0.2s',
   };
 
-  const linkHoverStyle = {
-    color: '#2563eb'
-  };
-
   return (
-      <Router>
-        <div style={containerStyle}>
-          <header style={headerStyle}>
-            <h1 style={{ fontSize: '24px', fontWeight: '600', color: '#2563eb' }}>TrustChain</h1>
-            <nav style={navStyle}>
-              <Link to="/" style={linkStyle}>Create</Link>
-              <Link to="/about" style={linkStyle}>About</Link>
-              <Link to="/case-study" style={linkStyle}>Case Study</Link>
-            </nav>
-          </header>
+      <div style={containerStyle}>
+        <header style={headerStyle}>
+          <h1 style={{ fontSize: '24px', fontWeight: '600', color: '#2563eb' }}>
+            <Link to="/" style={{ color: '#2563eb', textDecoration: 'none' }}>TrustChain</Link>
+          </h1>
+          <nav style={navStyle}>
+            <Link to="/" style={linkStyle}>Create</Link>
+            <Link to="/about" style={linkStyle}>About</Link>
+            <Link to="/case-study" style={linkStyle}>Case Study</Link>
+          </nav>
+        </header>
 
-          <main style={{ padding: '24px' }}>
-            <Routes>
-              <Route path="/" element={<CreateTrustChain />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/case-study" element={<CaseStudy />} />
-            </Routes>
-          </main>
-        </div>
-      </Router>
+        {/* Показываем анимацию только на главной */}
+        {location.pathname === '/' && <AnimatedSteps />}
+
+        <main style={{ padding: '24px' }}>
+          <Routes>
+            <Route path="/" element={<CreateTrustChain />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/case-study" element={<CaseStudy />} />
+          </Routes>
+        </main>
+      </div>
   );
-}
+};
+
+const App = () => (
+    <Router>
+      <Layout />
+    </Router>
+);
 
 export default App;
