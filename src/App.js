@@ -5,7 +5,6 @@ import CaseStudy from './pages/CaseStudy';
 import CreateTrustChain from './pages/CreateTrustChain';
 import AnimatedSteps from './AnimatedSteps';
 
-// Список тайтлов
 const trustTitles = [
   "Start your chain of trust.",
   "Your journey, securely linked.",
@@ -19,7 +18,6 @@ const trustTitles = [
   "From events to proof — start here."
 ];
 
-// Функция выбора случайного тайтла
 const getRandomTitle = () => {
   const index = Math.floor(Math.random() * trustTitles.length);
   return trustTitles[index];
