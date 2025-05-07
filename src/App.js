@@ -5,6 +5,26 @@ import CaseStudy from './pages/CaseStudy';
 import CreateTrustChain from './pages/CreateTrustChain';
 import AnimatedSteps from './AnimatedSteps';
 
+// Список тайтлов
+const trustTitles = [
+  "Start your chain of trust.",
+  "Your journey, securely linked.",
+  "Track truth from the beginning.",
+  "Build your verified story.",
+  "Chain your moments. Trust forever.",
+  "One chain. Endless transparency.",
+  "Secure the past. Trust the future.",
+  "Every link matters. Make yours.",
+  "Create and prove your legacy.",
+  "From events to proof — start here."
+];
+
+// Функция выбора случайного тайтла
+const getRandomTitle = () => {
+  const index = Math.floor(Math.random() * trustTitles.length);
+  return trustTitles[index];
+};
+
 const Layout = () => {
   const location = useLocation();
 
@@ -47,8 +67,17 @@ const Layout = () => {
           </nav>
         </header>
 
-        {/* Показываем анимацию только на главной */}
-        {location.pathname === '/' && <AnimatedSteps />}
+        {/* Главная страница: тайтл + анимация */}
+        {location.pathname === '/' && (
+            <>
+              <div style={{ padding: '32px 24px 0', textAlign: 'center' }}>
+                <h2 style={{ fontSize: '28px', fontWeight: '600', color: '#2563eb' }}>
+                  {getRandomTitle()}
+                </h2>
+              </div>
+              <AnimatedSteps />
+            </>
+        )}
 
         <main style={{ padding: '24px' }}>
           <Routes>
@@ -58,7 +87,7 @@ const Layout = () => {
           </Routes>
         </main>
 
-        <footer className="footer">
+        <footer className="footer" style={{ textAlign: 'center', padding: '16px', color: '#666' }}>
           <p>
             Follow us on Twitter: <a href="https://x.com/trustchainx" target="_blank" rel="noreferrer">@TrustChainX</a>
           </p>
