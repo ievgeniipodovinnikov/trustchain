@@ -1,0 +1,110 @@
+.case-study-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 18px;
+}
+
+.page-title {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #333;
+}
+
+.case-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: none;
+    overflow: hidden;
+    max-height: 180px;  /* ограничиваем размер карточки по умолчанию */
+}
+
+.case-card.expanded {
+    max-height: 1000px;  /* Устанавливаем максимальную высоту для раскрытой карточки */
+}
+
+.case-header {
+    padding: 0;
+    margin: 0;
+}
+
+.case-header h3 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.case-header p {
+    font-size: 16px;
+    color: #666;
+}
+
+.case-body {
+    padding-top: 20px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-out, max-height 0.5s ease-out;
+}
+
+.case-card.expanded .case-body {
+    opacity: 1;
+    max-height: 500px;
+}
+
+.events-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 15px;
+}
+
+.event {
+    margin-bottom: 15px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.event-title {
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+}
+
+.event-details {
+    font-size: 16px;
+    color: #666;
+}
+
+.event-details span.event-date {
+    font-weight: 700;
+    color: #333;
+}
+
+.case-card.expanded .event {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 16px;
+    color: #777;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.footer a:hover {
+    color: #0056b3;
+}

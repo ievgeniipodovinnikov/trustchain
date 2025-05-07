@@ -1,24 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import About from './pages/About';
+import CaseStudy from './pages/CaseStudy';
+import CreateTrustChain from './pages/CreateTrustChain';
 
-function App() {
+const App = () => {
+  const containerStyle = {
+    minHeight: '100vh',
+    backgroundColor: 'white',
+    color: '#333'
+  };
+
+  const headerStyle = {
+    padding: '16px',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  };
+
+  const navStyle = {
+    display: 'flex',
+    gap: '16px'
+  };
+
+  const linkStyle = {
+    textDecoration: 'none',
+    color: '#3b82f6',
+    fontWeight: '500',
+    transition: 'color 0.2s',
+  };
+
+  const linkHoverStyle = {
+    color: '#2563eb'
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router>
+        <div style={containerStyle}>
+          <header style={headerStyle}>
+            <h1 style={{ fontSize: '24px', fontWeight: '600', color: '#2563eb' }}>TrustChain</h1>
+            <nav style={navStyle}>
+              <Link to="/" style={linkStyle}>Create</Link>
+              <Link to="/about" style={linkStyle}>About</Link>
+              <Link to="/case-study" style={linkStyle}>Case Study</Link>
+            </nav>
+          </header>
+
+          <main style={{ padding: '24px' }}>
+            <Routes>
+              <Route path="/" element={<CreateTrustChain />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/case-study" element={<CaseStudy />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
   );
 }
 
