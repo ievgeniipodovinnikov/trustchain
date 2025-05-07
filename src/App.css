@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* Стили для футера */
+.footer {
+  background-color: #2563eb;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  width: 100%;
+}
+

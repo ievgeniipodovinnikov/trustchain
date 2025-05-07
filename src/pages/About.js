@@ -18,15 +18,6 @@ const About = () => (
             by making product histories transparent. Every transaction in the chain is an opportunity to further verify and prove the
             authenticity of products.
         </p>
-
-        <footer style={{ marginTop: '40px', fontSize: '16px', textAlign: 'center' }}>
-            <p>
-                Follow us on Twitter: <a href="https://x.com/trustchainx" target="_blank" style={{ textDecoration: 'underline' }}>@TrustChainX</a>
-            </p>
-            <p>
-                Made by <a href="https://stacklead.pro" target="_blank" style={{ textDecoration: 'underline' }}>StackLead.pro</a>
-            </p>
-        </footer>
     </div>
 );
 

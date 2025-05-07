@@ -102,15 +102,6 @@ const CaseStudy = () => {
                     </div>
                 </div>
             ))}
-
-            <footer className="footer">
-                <p>
-                    Follow us on Twitter: <a href="https://x.com/trustchainx" target="_blank">@TrustChainX</a>
-                </p>
-                <p>
-                    Made by <a href="https://x.com/stackleadpro" target="_blank">StackLead Pro</a>
-                </p>
-            </footer>
         </div>
     );
 };
