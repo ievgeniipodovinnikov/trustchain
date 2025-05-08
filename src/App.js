@@ -88,10 +88,10 @@ const Layout = () => {
 
         <footer style={{ textAlign: 'center', padding: '16px', color: '#666' }}>
           <p>
-            Follow us on Twitter: <a href="https://x.com/trustchainx" target="_blank" rel="noreferrer">@TrustChainX</a>
+            Follow us on Twitter: <a href="https://x.com/trustchainx" target="_blank" rel="noopener noreferrer">@TrustChainX</a>
           </p>
           <p>
-            Made by <a href="https://stacklead.pro" target="_blank" rel="noreferrer">Stacklead.pro</a>
+            Made by <a href="https://stacklead.pro" target="_blank" rel="noreferrer noopener">Stacklead.pro</a>
           </p>
         </footer>
       </div>

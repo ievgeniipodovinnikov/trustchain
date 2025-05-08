@@ -40,7 +40,7 @@ const DomainCard = () => {
             />
             <div className="modal-footer">
                 <p style={{ color: 'white', textAlign: 'center' }}>
-                    By <a href="https://stacklead.pro" target="_blank" rel="noreferrer" style={{ color: 'white', fontWeight: 'bold' }}>
+                    By <a href="https://stacklead.pro" target="_blank" rel="noopener noreferrer" style={{ color: 'white', fontWeight: 'bold' }}>
                     Stacklead.pro
                 </a>
                 </p>
