@@ -11,6 +11,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     z-index: 40;
     transition: transform 0.3s ease;
+    box-sizing: border-box; /* Чтобы padding не выходил за пределы ширины */
 }
 
 .domain-title {
@@ -70,4 +71,42 @@
     height: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Адаптация под мобильные устройства */
+@media (max-width: 640px) {
+    .domain-card {
+        left: 0;
+        right: 0;
+        max-width: none;
+        width: 100%;
+        margin: 0 !important;
+        padding: 16px;
+        border-radius: 0;
+    }
+
+    .domain-title {
+        font-size: 20px;
+    }
+
+    .domain-description {
+        font-size: 12px;
+    }
+
+    .domain-price {
+        font-size: 16px;
+    }
+
+    .buy-now-button {
+        font-size: 14px;
+    }
+
+    .shark-icon {
+        display: none;
+    }
+
+    .close-button {
+        top: 12px;
+        right: 12px;
+    }
 }
