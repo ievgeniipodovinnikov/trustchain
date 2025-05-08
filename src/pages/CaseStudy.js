@@ -91,7 +91,7 @@ const CaseStudy = () => {
                         <ul className="events-list">
                             {scenario.events.map((event, idx) => (
                                 <li key={idx} className="event">
-                                    <span className="emoji">🔗</span>  {/* Эмодзи для звена цепи */}
+                                    <span className="emoji" role="img" aria-label="link symbol">🔗</span>
                                     <div className="event-title">{event.description}</div>
                                     <div className="event-details">
                                         <span className="event-date">{event.date}</span>

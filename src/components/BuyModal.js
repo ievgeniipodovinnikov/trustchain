@@ -15,7 +15,7 @@ const BuyModal = ({ domain, isOpen, onClose }) => {
                     <a
                         href="https://t.me/Kaiserkrab"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         className="modal-button telegram"
                     >
                         Telegram
@@ -23,13 +23,15 @@ const BuyModal = ({ domain, isOpen, onClose }) => {
                     <a
                         href="https://wa.me/40765263983"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         className="modal-button whatsapp"
                     >
                         WhatsApp
                     </a>
                     <a
                         href="https://www.namecheap.com/domains/registration/results/?domain=trustchain.online"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="modal-button buy"
                     >
                         Buy on Namecheap
