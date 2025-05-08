@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import About from './pages/About';
 import CaseStudy from './pages/CaseStudy';
 import CreateTrustChain from './pages/CreateTrustChain';
 import AnimatedSteps from './AnimatedSteps';
+import DomainCard from './components/DomainCard'; // Добавляем компонент DomainCard
 
 const trustTitles = [
   "Start your chain of trust.",
@@ -65,7 +66,6 @@ const Layout = () => {
           </nav>
         </header>
 
-        {/* Главная страница: тайтл + анимация */}
         {location.pathname === '/' && (
             <>
               <div style={{ padding: '32px 24px 0', textAlign: 'center' }}>
@@ -83,9 +83,10 @@ const Layout = () => {
             <Route path="/about" element={<About />} />
             <Route path="/case-study" element={<CaseStudy />} />
           </Routes>
+          <DomainCard />  {/* Добавляем компонент DomainCard */}
         </main>
 
-        <footer className="footer" style={{ textAlign: 'center', padding: '16px', color: '#666' }}>
+        <footer style={{ textAlign: 'center', padding: '16px', color: '#666' }}>
           <p>
             Follow us on Twitter: <a href="https://x.com/trustchainx" target="_blank" rel="noreferrer">@TrustChainX</a>
           </p>
@@ -98,9 +99,9 @@ const Layout = () => {
 };
 
 const App = () => (
-    <Router>
+    <BrowserRouter>
       <Layout />
-    </Router>
+    </BrowserRouter>
 );
 
 export default App;
