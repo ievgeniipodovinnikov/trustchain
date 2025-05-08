@@ -1,9 +1,49 @@
 import React from 'react';
 
+const buttonBase = {
+    padding: '10px 16px',
+    borderRadius: '8px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+};
+
+const finalizeButton = {
+    ...buttonBase,
+    backgroundColor: '#4a90e2',
+    color: 'white',
+    float: 'right',
+};
+
+const finalizeButtonDisabled = {
+    ...finalizeButton,
+    backgroundColor: '#e0e0e0',
+    cursor: 'not-allowed',
+};
+
+const buttonStyle = {
+    ...buttonBase,
+    backgroundColor: '#4a90e2',
+    color: 'white',
+    float: 'right',
+};
+
+const buttonDisabledStyle = {
+    ...buttonStyle,
+    backgroundColor: '#e0e0e0',
+    cursor: 'not-allowed',
+};
+
+const buttonHoverStyle = {
+    backgroundColor: '#357ABD',
+};
+
 const Step1 = ({
                    category, subCategory, title, description, setCategory, setSubCategory,
                    setTitle, setDescription, isFirstStepValid, handleCreate,
-                   fieldStyle, buttonStyle, buttonDisabledStyle, buttonHoverStyle
+                   fieldStyle
                }) => {
 
     const categories = {

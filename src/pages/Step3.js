@@ -1,21 +1,80 @@
 import React from 'react';
 
+const buttonBase = {
+    padding: '10px 16px',
+    borderRadius: '8px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+};
+
+const finalizeButton = {
+    ...buttonBase,
+    backgroundColor: '#4a90e2',
+    color: 'white',
+    float: 'right',
+};
+
+const finalizeButtonDisabled = {
+    ...finalizeButton,
+    backgroundColor: '#e0e0e0',
+    cursor: 'not-allowed',
+};
+
+const backButtonStyle = {
+    ...buttonBase,
+    backgroundColor: '#f2f2f2',
+    color: '#333',
+    marginRight: '10px',
+};
+
+const inputStyle = {
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    padding: '10px',
+    fontSize: '16px',
+    margin: '8px 0',
+    width: 'calc(100% - 20px)',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial',
+};
+
 const Step3 = ({ password, email, setPassword, setEmail, buttonStyle, handleBack }) => {
-    const isStepValid = password.length >= 6 && email.includes('@');
+    const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isStepValid = password.length === 6 && isValidEmail(email);
+
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        if (/^\d{0,6}$/.test(newPassword)) {
+            setPassword(newPassword);
+        }
+    };
 
     return (
         <div>
             <h3>Step 3: Finalize TrustChain</h3>
 
+            <p>
+                Please choose a 6-digit PIN to add new events in the future.
+            </p>
+
             <div>
-                <label>Password</label>
+                <label>PIN (6 digits)</label>
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={{ ...buttonStyle, width: '100%', marginBottom: '10px' }}
+                    onChange={handlePasswordChange}
+                    maxLength="6"
+                    inputMode="numeric"
+                    pattern="\d*"
+                    style={inputStyle}
                 />
             </div>
+
+            <p>
+                We also need your email for recovery purposes.
+            </p>
 
             <div>
                 <label>Email</label>
@@ -23,32 +82,26 @@ const Step3 = ({ password, email, setPassword, setEmail, buttonStyle, handleBack
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    style={{ ...buttonStyle, width: '100%', marginBottom: '10px' }}
+                    style={inputStyle}
                 />
             </div>
 
-            <button
-                style={{
-                    ...buttonStyle,
-                    backgroundColor: isStepValid ? '#4CAF50' : '#d3d3d3',
-                    cursor: isStepValid ? 'pointer' : 'not-allowed',
-                }}
-                disabled={!isStepValid}
-            >
-                Finalize TrustChain
-            </button>
+            <div style={{ clear: 'both', marginTop: '20px' }}>
+                <button
+                    onClick={handleBack}
+                    style={backButtonStyle}
+                >
+                    ← Back
+                </button>
 
-            <button
-                onClick={handleBack}
-                style={{
-                    ...buttonStyle,
-                    backgroundColor: '#f0f0f0',
-                    color: '#333',
-                    marginTop: '20px',
-                }}
-            >
-                ← Back
-            </button>
+                <button
+                    onClick={() => {}}
+                    style={isStepValid ? finalizeButton : finalizeButtonDisabled}
+                    disabled={!isStepValid}
+                >
+                    Finalize TrustChain
+                </button>
+            </div>
         </div>
     );
 };
