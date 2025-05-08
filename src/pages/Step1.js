@@ -10,19 +10,6 @@ const buttonBase = {
     transition: 'background-color 0.3s ease',
 };
 
-const finalizeButton = {
-    ...buttonBase,
-    backgroundColor: '#4a90e2',
-    color: 'white',
-    float: 'right',
-};
-
-const finalizeButtonDisabled = {
-    ...finalizeButton,
-    backgroundColor: '#e0e0e0',
-    cursor: 'not-allowed',
-};
-
 const buttonStyle = {
     ...buttonBase,
     backgroundColor: '#4a90e2',
