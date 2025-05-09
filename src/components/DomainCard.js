@@ -15,7 +15,7 @@ const DomainCard = () => {
     return (
         <div className="domain-card">
             <h3 className="domain-title">
-                This website is for sale: <span className="domain-name">{domain}</span>
+                This web app is for sale: <span className="domain-name">{domain}</span>
             </h3>
             <p className="domain-description">{description}</p>
             <p className="domain-price">${price}</p>
