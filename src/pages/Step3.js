@@ -40,7 +40,7 @@ const inputStyle = {
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial',
 };
 
-const Step3 = ({ password, email, setPassword, setEmail, buttonStyle, handleBack }) => {
+const Step3 = ({ password, email, setPassword, setEmail, handleBack, finalizeStep3 }) => {
     const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const isStepValid = password.length === 6 && isValidEmail(email);
 
@@ -95,7 +95,7 @@ const Step3 = ({ password, email, setPassword, setEmail, buttonStyle, handleBack
                 </button>
 
                 <button
-                    onClick={() => {}}
+                    onClick={finalizeStep3}
                     style={isStepValid ? finalizeButton : finalizeButtonDisabled}
                     disabled={!isStepValid}
                 >

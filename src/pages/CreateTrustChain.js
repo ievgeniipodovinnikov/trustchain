@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
+import StepFinal from './StepFinal';
 
 const CreateTrustChain = () => {
     const [step, setStep] = useState(1);
@@ -12,15 +13,18 @@ const CreateTrustChain = () => {
     const [additionalLinks, setAdditionalLinks] = useState([]);
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [confirmed, setConfirmed] = useState(false);
+
+    const stepFinalRef = useRef(null);
 
     useEffect(() => {
         if (step === 1) {
             const formElements = [category, subCategory, title, description];
-            if (formElements.some(field => field)) {
+            if (formElements.some((field) => field)) {
                 setTimeout(() => {
                     window.scrollTo({
                         top: document.body.scrollHeight,
-                        behavior: 'smooth',
+                        behavior: 'smooth'
                     });
                 }, 300);
             }
@@ -32,9 +36,17 @@ const CreateTrustChain = () => {
             setTimeout(() => {
                 window.scrollTo({
                     top: document.body.scrollHeight,
-                    behavior: 'smooth',
+                    behavior: 'smooth'
                 });
-            }, 300); 
+            }, 300);
+        }
+    }, [step]);
+
+    useEffect(() => {
+        if (step === 4 && stepFinalRef.current) {
+            setTimeout(() => {
+                stepFinalRef.current.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
         }
     }, [step]);
 
@@ -53,24 +65,30 @@ const CreateTrustChain = () => {
     };
 
     const handleBack = () => {
-        if (step === 2) {
-            setStep(1);
-        } else if (step === 3) {
-            setStep(2);
-        }
+        if (step === 2) setStep(1);
+        else if (step === 3) setStep(2);
+        else if (step === 4) setStep(3);
     };
 
     const isFirstStepValid =
         category && subCategory && title.length >= 2 && description.length >= 5;
 
-    const isSecondStepValid = additionalLinks.length > 0 &&
+    const isSecondStepValid =
+        additionalLinks.length > 0 &&
         additionalLinks.every(
             (link) => link.image && link.description.trim() && link.date
         );
 
     const isFinalizeButtonActive = () => {
-        const isValidLinks = additionalLinks.every(link => link.image && link.description.trim() && link.date);
-        return isValidLinks && additionalLinks.length > 0;
+        return additionalLinks.length > 0 &&
+            additionalLinks.every(
+                (link) => link.image && link.description.trim() && link.date
+            );
+    };
+
+    const handleConfirm = () => {
+        alert('TrustChain created successfully!');
+        setConfirmed(true);
     };
 
     const fieldStyle = {
@@ -89,21 +107,12 @@ const CreateTrustChain = () => {
         borderRadius: '8px',
         border: 'none',
         cursor: 'pointer',
-        transition: 'background-color 0.2s',
-    };
-
-    const buttonDisabledStyle = {
-        backgroundColor: '#a3bffa',
-        cursor: 'not-allowed'
-    };
-
-    const buttonHoverStyle = {
-        backgroundColor: '#2563eb'
+        transition: 'background-color 0.2s'
     };
 
     return (
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <h2>Create a TrustChain</h2>
+            {step !== 4 && <h2>Create a TrustChain</h2>}
 
             {step === 1 && (
                 <Step1
@@ -119,8 +128,6 @@ const CreateTrustChain = () => {
                     handleCreate={handleCreate}
                     fieldStyle={fieldStyle}
                     buttonStyle={buttonStyle}
-                    buttonDisabledStyle={buttonDisabledStyle}
-                    buttonHoverStyle={buttonHoverStyle}
                 />
             )}
 
@@ -133,6 +140,7 @@ const CreateTrustChain = () => {
                     handleFinalize={handleFinalize}
                     handleBack={handleBack}
                     isFinalizeButtonActive={isFinalizeButtonActive}
+                    buttonStyle={buttonStyle}
                 />
             )}
 
@@ -143,8 +151,32 @@ const CreateTrustChain = () => {
                     setPassword={setPassword}
                     setEmail={setEmail}
                     buttonStyle={buttonStyle}
-                    handleBack={handleBack} 
+                    handleBack={handleBack}
+                    finalizeStep3={() => setStep(4)}
                 />
+            )}
+
+            {step === 4 && (
+                <div ref={stepFinalRef}>
+                    <StepFinal
+                        category={category}
+                        subCategory={subCategory}
+                        title={title}
+                        description={description}
+                        additionalLinks={additionalLinks}
+                        email={email}
+                        password={password}
+                        handleBack={handleBack}
+                        handleConfirm={handleConfirm}
+                        buttonStyle={buttonStyle}
+                    />
+                </div>
+            )}
+
+            {confirmed && (
+                <div style={{ marginTop: 20, color: 'green' }}>
+                    Your TrustChain has been created!
+                </div>
             )}
         </div>
     );
