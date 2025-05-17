@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 
+const finalTitles = [
+    '✅ Your TrustChain is Ready',
+    '🔗 TrustChain Successfully Created',
+    '🎉 Chain Created! Share It with Confidence',
+    '🧩 Your Chain of Trust Has Been Built',
+    '🚀 Chain Published Successfully',
+    '🔐 Your Trust Record is Live',
+    '🌐 Your Chain is Now Online',
+];
+
 const StepFinal = ({
                        category,
                        subCategory,
@@ -9,8 +19,22 @@ const StepFinal = ({
                        additionalLinks,
                    }) => {
     const [copySuccess, setCopySuccess] = useState('');
-    const [uniqueLink] = useState(`https://trustchain.online/chain/${encodeURIComponent(title)}-${Date.now()}`);
-    const qrRef = useRef(null);
+    const [uniqueLink] = useState(
+        `https://trustchain.online/chain/${encodeURIComponent(title)}-${Date.now()}`
+    );
+    const [randomTitle, setRandomTitle] = useState('');
+    const titleRef = useRef(null);
+
+    useEffect(() => {
+        const index = Math.floor(Math.random() * finalTitles.length);
+        setRandomTitle(finalTitles[index]);
+
+        setTimeout(() => {
+            if (titleRef.current) {
+                titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 300);
+    }, []);
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(uniqueLink).then(() => {
@@ -19,39 +43,32 @@ const StepFinal = ({
         });
     };
 
-    useEffect(() => {
-        setTimeout(() => {
-            if (qrRef.current) {
-                qrRef.current.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 300);
-    }, []);
-
     return (
         <div>
-            <div ref={qrRef}>
-                <h2>Review Your TrustChain</h2>
+            <h2 ref={titleRef}>{randomTitle}</h2>
 
-                <div style={{ marginBottom: 20 }}>
-                    <QRCodeSVG value={uniqueLink} size={150} />
-                </div>
+            <div style={{ marginBottom: 20 }}>
+                <QRCodeSVG value={uniqueLink} size={150} />
+            </div>
 
-                <div style={{ marginBottom: 20 }}>
-                    <button
-                        style={{
-                            backgroundColor: '#3b82f6',
-                            color: 'white',
-                            padding: '8px 16px',
-                            borderRadius: '8px',
-                            border: 'none',
-                            cursor: 'pointer',
-                        }}
-                        onClick={copyToClipboard}
-                    >
-                        Copy Link
-                    </button>
-                    {copySuccess && <span style={{ marginLeft: 10, color: 'green' }}>{copySuccess}</span>}
-                </div>
+            <div style={{ marginBottom: 10 }}>
+                <button
+                    style={{
+                        backgroundColor: '#3b82f6',
+                        color: 'white',
+                        padding: '8px 16px',
+                        borderRadius: '8px',
+                        border: 'none',
+                        cursor: 'pointer',
+                        marginBottom: '20px',
+                    }}
+                    onClick={copyToClipboard}
+                >
+                    Copy Link
+                </button>
+                {copySuccess && (
+                    <span style={{ marginLeft: 10, color: 'green' }}>{copySuccess}</span>
+                )}
             </div>
 
             <div style={{ marginBottom: 20 }}>
@@ -66,46 +83,39 @@ const StepFinal = ({
                 <strong>Description:</strong> {description}
             </div>
 
-            <div style={{ marginBottom: 12 }}>
+            <div style={{ marginBottom: 20 }}>
                 <strong>Chain Events (Links):</strong>
             </div>
 
-            {additionalLinks.length === 0 ? (
-                <div>No chain events added</div>
-            ) : (
-                additionalLinks.map((link, i) => (
-                    <div
-                        key={i}
-                        style={{
-                            backgroundColor: '#d6f5d6',
-                            borderRadius: 8,
-                            padding: 15,
-                            marginBottom: 20,
-                        }}
-                    >
-                        <div style={{ fontWeight: 'bold', marginBottom: 10 }}>
-                            {i + 1}.
-                        </div>
-                        <div style={{ marginBottom: 10 }}>
-                            <strong>Description:</strong> {link.description}
-                        </div>
-                        <div style={{ marginBottom: 10 }}>
-                            <strong>Date:</strong> {link.date}
-                        </div>
-                        {link.image && (
-                            <img
-                                src={
-                                    typeof link.image === 'string'
-                                        ? link.image
-                                        : URL.createObjectURL(link.image)
-                                }
-                                alt="link"
-                                style={{ maxWidth: '100%', borderRadius: 8 }}
-                            />
-                        )}
+            {additionalLinks.map((link, i) => (
+                <div
+                    key={i}
+                    style={{
+                        backgroundColor: '#d6f5d6',
+                        borderRadius: 8,
+                        padding: 15,
+                        marginBottom: 20,
+                    }}
+                >
+                    <div style={{ marginBottom: 10 }}>
+                        <strong>{i + 1}.</strong> {link.description}
                     </div>
-                ))
-            )}
+                    <div style={{ marginBottom: 10 }}>
+                        <strong>Date:</strong> {link.date}
+                    </div>
+                    {link.image && (
+                        <img
+                            src={
+                                typeof link.image === 'string'
+                                    ? link.image
+                                    : URL.createObjectURL(link.image)
+                            }
+                            alt="link"
+                            style={{ maxWidth: '100%', borderRadius: 8 }}
+                        />
+                    )}
+                </div>
+            ))}
         </div>
     );
 };
