@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 
 const finalTitles = [
@@ -8,7 +8,6 @@ const finalTitles = [
     '🧩 Your Chain of Trust Has Been Built',
     '🚀 Chain Published Successfully',
     '🔐 Your Trust Record is Live',
-    '🌐 Your Chain is Now Online',
 ];
 
 const StepFinal = ({
@@ -47,8 +46,37 @@ const StepFinal = ({
         <div>
             <h2 ref={titleRef}>{randomTitle}</h2>
 
-            <div style={{ marginBottom: 20 }}>
-                <QRCodeSVG value={uniqueLink} size={150} />
+            <div style={{ position: 'relative', width: 150, height: 150, marginBottom: 20 }}>
+                <QRCodeSVG value={uniqueLink} size={150} level="H" />
+
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 40,
+                        height: 40,
+                        borderRadius: '50%',
+                        backgroundColor: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 0 4px rgba(0,0,0,0.15)',
+                        pointerEvents: 'none',
+                        userSelect: 'none',
+                    }}
+                    aria-label="chain"
+                    role="img"
+                >
+                    <span
+                        role="img"
+                        aria-label="chain link"
+                        style={{ fontSize: 28, lineHeight: 1, userSelect: 'none' }}
+                    >
+                        🔗
+                    </span>
+                </div>
             </div>
 
             <div style={{ marginBottom: 10 }}>
