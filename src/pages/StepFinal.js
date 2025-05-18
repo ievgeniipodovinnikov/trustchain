@@ -16,17 +16,55 @@ const StepFinal = ({
                        title,
                        description,
                        additionalLinks,
+                       email,
+                       pinCode,
                    }) => {
     const [copySuccess, setCopySuccess] = useState('');
-    const [uniqueLink] = useState(
-        `https://trustchain.online/chain/${encodeURIComponent(title)}-${Date.now()}`
-    );
+    const [uniqueLink, setUniqueLink] = useState('');
     const [randomTitle, setRandomTitle] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [errorInfo, setErrorInfo] = useState('');
     const titleRef = useRef(null);
 
     useEffect(() => {
         const index = Math.floor(Math.random() * finalTitles.length);
         setRandomTitle(finalTitles[index]);
+
+        const payload = {
+            category,
+            subCategory,
+            title,
+            description,
+            creatorEmail: email,
+            pinCode,
+            links: additionalLinks.map((link, i) => ({
+                description: link.description,
+                date: link.date,
+                imageUrl: typeof link.image === 'string' ? link.image : '',
+            })),
+        };
+
+        fetch('http://localhost:8080/api/trustchain', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Network response was not ok');
+                return res.json();
+            })
+            .then(data => {
+                setUniqueLink(data.qrCodeUrl);
+                setLoading(false);
+            })
+            .catch(err => {
+                setError('Failed to create TrustChain. Please try again.');
+                setErrorInfo(err.message || '');
+                setLoading(false);
+            });
 
         setTimeout(() => {
             if (titleRef.current) {
@@ -41,6 +79,32 @@ const StepFinal = ({
             setTimeout(() => setCopySuccess(''), 2000);
         });
     };
+
+    if (loading) {
+        return <div style={{ textAlign: 'center', marginTop: 50 }}>Creating your TrustChain...</div>;
+    }
+
+    if (error) {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '50vh',
+                    color: 'red',
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                    padding: 20,
+                    textAlign: 'center',
+                }}
+            >
+                {error}
+                {errorInfo && <small style={{ marginTop: 10, color: '#a00', fontWeight: 'normal' }}>({errorInfo})</small>}
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -69,13 +133,9 @@ const StepFinal = ({
                     aria-label="chain"
                     role="img"
                 >
-                    <span
-                        role="img"
-                        aria-label="chain link"
-                        style={{ fontSize: 28, lineHeight: 1, userSelect: 'none' }}
-                    >
-                        🔗
-                    </span>
+          <span role="img" aria-label="chain link" style={{ fontSize: 28, lineHeight: 1, userSelect: 'none' }}>
+            🔗
+          </span>
                 </div>
             </div>
 
@@ -94,9 +154,7 @@ const StepFinal = ({
                 >
                     Copy Link
                 </button>
-                {copySuccess && (
-                    <span style={{ marginLeft: 10, color: 'green' }}>{copySuccess}</span>
-                )}
+                {copySuccess && <span style={{ marginLeft: 10, color: 'green' }}>{copySuccess}</span>}
             </div>
 
             <div style={{ marginBottom: 20 }}>
@@ -133,17 +191,24 @@ const StepFinal = ({
                     </div>
                     {link.image && (
                         <img
-                            src={
-                                typeof link.image === 'string'
-                                    ? link.image
-                                    : URL.createObjectURL(link.image)
-                            }
+                            src={typeof link.image === 'string' ? link.image : URL.createObjectURL(link.image)}
                             alt="link"
                             style={{ maxWidth: '100%', borderRadius: 8 }}
                         />
                     )}
                 </div>
             ))}
+
+            <div style={{ marginTop: 30, padding: 15, backgroundColor: '#eef6ff', borderRadius: 8 }}>
+                <p>
+                    <strong>Email for recovery:</strong> {email} <br />
+                    (Used to recover access if you forget your PIN code)
+                </p>
+                <p>
+                    <strong>PIN Code:</strong> {pinCode} <br />
+                    (Needed to add new events to your TrustChain in the future)
+                </p>
+            </div>
         </div>
     );
 };

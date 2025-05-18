@@ -87,7 +87,7 @@ const Layout = () => {
             <Route path="/about" element={<About />} />
             <Route path="/case-study" element={<CaseStudy />} />
           </Routes>
-          <DomainCard />  {/* Добавляем компонент DomainCard */}
+          <DomainCard />  {}
         </main>
 
         <footer style={{ textAlign: 'center', padding: '16px', color: '#666' }}>
