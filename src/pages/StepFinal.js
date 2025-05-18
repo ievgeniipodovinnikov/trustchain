@@ -18,18 +18,41 @@ const StepFinal = ({
                        additionalLinks,
                        email,
                        pinCode,
+                       useBackend = false,
+                       uniqueLinkFromProps = '',
                    }) => {
     const [copySuccess, setCopySuccess] = useState('');
     const [uniqueLink, setUniqueLink] = useState('');
     const [randomTitle, setRandomTitle] = useState('');
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
     const [errorInfo, setErrorInfo] = useState('');
     const titleRef = useRef(null);
 
     useEffect(() => {
         const index = Math.floor(Math.random() * finalTitles.length);
         setRandomTitle(finalTitles[index]);
+
+        if (!useBackend) {
+            const generatedLink =
+                uniqueLinkFromProps ||
+                `${window.location.origin}/trustchain/${encodeURIComponent(title)}-${Date.now()}`;
+
+            setUniqueLink(generatedLink);
+            setLoading(false);
+
+            setTimeout(() => {
+                if (titleRef.current) {
+                    titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 300);
+
+            setErrorInfo('');
+            return;
+        }
+
+        setLoading(true);
+        setErrorInfo('');
+        setUniqueLink('');
 
         const payload = {
             category,
@@ -38,7 +61,7 @@ const StepFinal = ({
             description,
             creatorEmail: email,
             pinCode,
-            links: additionalLinks.map((link, i) => ({
+            links: additionalLinks.map((link) => ({
                 description: link.description,
                 date: link.date,
                 imageUrl: typeof link.image === 'string' ? link.image : '',
@@ -52,17 +75,17 @@ const StepFinal = ({
             },
             body: JSON.stringify(payload),
         })
-            .then(res => {
-                if (!res.ok) throw new Error('Network response was not ok');
+            .then((res) => {
+                if (!res.ok) throw new Error(`Server error: ${res.status}`);
                 return res.json();
             })
-            .then(data => {
+            .then((data) => {
+                if (!data.qrCodeUrl) throw new Error('Invalid response from server');
                 setUniqueLink(data.qrCodeUrl);
                 setLoading(false);
             })
-            .catch(err => {
-                setError('Failed to create TrustChain. Please try again.');
-                setErrorInfo(err.message || '');
+            .catch((err) => {
+                setErrorInfo(err.message || 'Unknown error occurred');
                 setLoading(false);
             });
 
@@ -71,9 +94,20 @@ const StepFinal = ({
                 titleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 300);
-    }, []);
+    }, [
+        useBackend,
+        uniqueLinkFromProps,
+        category,
+        subCategory,
+        title,
+        description,
+        additionalLinks,
+        email,
+        pinCode,
+    ]);
 
     const copyToClipboard = () => {
+        if (!uniqueLink) return;
         navigator.clipboard.writeText(uniqueLink).then(() => {
             setCopySuccess('Copied!');
             setTimeout(() => setCopySuccess(''), 2000);
@@ -84,24 +118,10 @@ const StepFinal = ({
         return <div style={{ textAlign: 'center', marginTop: 50 }}>Creating your TrustChain...</div>;
     }
 
-    if (error) {
+    if (errorInfo) {
         return (
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '50vh',
-                    color: 'red',
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    padding: 20,
-                    textAlign: 'center',
-                }}
-            >
-                {error}
-                {errorInfo && <small style={{ marginTop: 10, color: '#a00', fontWeight: 'normal' }}>({errorInfo})</small>}
+            <div style={{ color: 'red', fontWeight: 'bold', marginTop: 50, textAlign: 'center' }}>
+                Error: {errorInfo}
             </div>
         );
     }
@@ -133,9 +153,9 @@ const StepFinal = ({
                     aria-label="chain"
                     role="img"
                 >
-          <span role="img" aria-label="chain link" style={{ fontSize: 28, lineHeight: 1, userSelect: 'none' }}>
-            🔗
-          </span>
+                    <span role="img" aria-label="chain link" style={{ fontSize: 28, lineHeight: 1, userSelect: 'none' }}>
+                        🔗
+                    </span>
                 </div>
             </div>
 
