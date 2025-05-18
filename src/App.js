@@ -5,6 +5,7 @@ import CaseStudy from './pages/CaseStudy';
 import CreateTrustChain from './pages/CreateTrustChain';
 import AnimatedSteps from './AnimatedSteps';
 import DomainCard from './components/DomainCard';
+import TrustChainView from './components/TrustChainView';
 
 const trustTitles = [
   "Start your chain of trust.",
@@ -27,7 +28,6 @@ const getRandomTitle = () => {
 const Layout = () => {
   const location = useLocation();
 
-  // Проверяем наличие ключевых фраз в тексте страницы
   const bodyText = typeof document !== 'undefined' ? document.body.innerText : '';
   const hideGuide = bodyText.includes('Review Your TrustChain') || bodyText.includes('Create a TrustChain');
 
@@ -86,6 +86,7 @@ const Layout = () => {
             <Route path="/" element={<CreateTrustChain />} />
             <Route path="/about" element={<About />} />
             <Route path="/case-study" element={<CaseStudy />} />
+            <Route path="/chain/:id" element={<TrustChainView />} />
           </Routes>
           <DomainCard />  {}
         </main>

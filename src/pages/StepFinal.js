@@ -18,7 +18,7 @@ const StepFinal = ({
                        additionalLinks,
                        email,
                        pinCode,
-                       useBackend = false,
+                       useBackend = true,
                        uniqueLinkFromProps = '',
                    }) => {
     const [copySuccess, setCopySuccess] = useState('');
@@ -27,6 +27,8 @@ const StepFinal = ({
     const [loading, setLoading] = useState(true);
     const [errorInfo, setErrorInfo] = useState('');
     const titleRef = useRef(null);
+
+    const requestSentRef = useRef(false);
 
     useEffect(() => {
         const index = Math.floor(Math.random() * finalTitles.length);
@@ -50,6 +52,13 @@ const StepFinal = ({
             return;
         }
 
+        // Защита от повторного вызова:
+        if (requestSentRef.current) {
+            // Уже отправляли запрос — ничего не делаем
+            return;
+        }
+        requestSentRef.current = true;
+
         setLoading(true);
         setErrorInfo('');
         setUniqueLink('');
@@ -68,7 +77,7 @@ const StepFinal = ({
             })),
         };
 
-        fetch('http://localhost:8080/api/trustchain', {
+        fetch('http://localhost:8080/api/trustchain/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

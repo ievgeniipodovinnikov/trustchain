@@ -165,7 +165,7 @@ const CreateTrustChain = () => {
                         description={description}
                         additionalLinks={additionalLinks}
                         email={email}
-                        password={password}
+                        pinCode={password} 
                         handleBack={handleBack}
                         handleConfirm={handleConfirm}
                         buttonStyle={buttonStyle}
