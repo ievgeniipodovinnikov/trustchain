@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BuyModal from "./BuyModal";
-import './DomainCard.css'; // Подключаем файл стилей
+import './DomainCard.css'; 
 
 const DomainCard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
