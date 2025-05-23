@@ -18,7 +18,7 @@ const StepFinal = ({
                        additionalLinks,
                        email,
                        pinCode,
-                       useBackend = true,
+                       useBackend = false,
                        uniqueLinkFromProps = '',
                    }) => {
     const [copySuccess, setCopySuccess] = useState('');
@@ -52,9 +52,7 @@ const StepFinal = ({
             return;
         }
 
-        // Защита от повторного вызова:
         if (requestSentRef.current) {
-            // Уже отправляли запрос — ничего не делаем
             return;
         }
         requestSentRef.current = true;
