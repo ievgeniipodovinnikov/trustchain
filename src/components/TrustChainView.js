@@ -12,7 +12,8 @@ const TrustChainView = () => {
     useEffect(() => {
         setLoading(true);
         setError('');
-        fetch(`http://localhost:8080/api/trustchain/${id}`)
+        fetch(`https://api.trustchain.online/api/trustchain/${id}`)
+//        fetch(`http://localhost:8080/api/trustchain/${id}`)
             .then(res => {
                 if (!res.ok) throw new Error(`Not found or server error: ${res.status}`);
                 return res.json();
