@@ -75,7 +75,7 @@ const StepFinal = ({
             })),
         };
 
-        fetch('https://api.trustchain.online/api/trustchain/create', {
+        fetch('http://localhost:8080/api/trustchain/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
