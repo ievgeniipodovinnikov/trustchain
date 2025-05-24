@@ -84,7 +84,7 @@ const StepFinal = ({
     });
 
 //    fetch('http://localhost:8080/api/trustchain/create', {
-    fetch('http://api.trustchain.online/api/trustchain/create', {
+    fetch('https://api.trustchain.online/api/trustchain/create', {
       method: 'POST',
       body: formData,
     })
